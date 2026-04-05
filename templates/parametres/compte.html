@@ -1,0 +1,66 @@
+<div class="row mt-5">
+	<div class="col-sm-12">
+		
+
+		<div class=" bg-light">
+			<h1 class="mb-4 ps-3 ">Compte</h1>
+
+			{% if utilisateur %}
+				<div class=" p-3 mb-3 bg-light">
+					<h5 class="mb-1"><strong>Utilisateur</strong> : {{ utilisateur.username }}</h5>
+				</div>
+				<div class=" p-3 mb-4 bg-light">
+					<h5 ><strong> Modification du mot de passe </strong></h5>
+
+					<form id="password-form" class="needs-validation"
+						novalidate>
+						<div class="mb-3">
+							<label for="ancien-mot-de-passe" class="form-label">Ancien mot de passe :</label>
+							<input type="password" class="form-control" id="ancien-mot-de-passe"
+								name="ancien-mot-de-passe">
+							<div class="invalid-feedback" id="feedback-ancien-mdp">
+
+							</div>
+						</div>
+
+						<div class="mb-3">
+							<label for="nouveau-mot-de-passe" class="form-label">Nouveau mot de passe :</label>
+							<input type="password" class="form-control" id="nouveau-mot-de-passe"
+								name="nouveau-mot-de-passe" minlength="15"
+								aria-describedby="passwordHelpInline">
+							<div class="invalid-feedback" id="feedback-nouveau-mdp">
+
+							</div>
+							<div id="passwordHelpInline" class="form-text">
+								Le nouveau mot de passe doit contenir au moins 15 caractères.
+							</div>
+						</div>
+
+						<div class="mb-3">
+							<label for="confirme-mot-de-passe" class="form-label">Confirmer le mot de passe :</label>
+							<input type="password" class="form-control" id="confirme-mot-de-passe"
+								name="confirme-mot-de-passe" minlength="15"
+								aria-describedby="passwordHelpInline">
+							<div class="invalid-feedback" id="feedback-confirme-mdp">
+
+							</div>
+						</div>
+
+						<div class="d-grid gap-2 d-md-flex  mt-4">
+							<button type="submit" id="submit-button-new-password" class="btn btn-primary">
+								Changer le mot de passe
+							</button>
+						</div>
+
+						<div id="response-message" class="mt-4"></div>
+					</form>
+				</div>
+
+			{% else %}
+				<p>Les informations ne peuvent être affichées pour le moment.</p>
+			{% endif %}
+			</div>
+
+		</div>
+</div>
+<script src="/js/script.js"></script>

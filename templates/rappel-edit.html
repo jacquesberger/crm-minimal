@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="row">
+		<div class="col-1 mt-3"></div>
+		<div class="col-10 mt-4"> 
+    <h1 class="mt-3 mb-4 text-center">Ajouter un rappel pour l'entreprise {{ entreprise.nom }}</h1>
+    <div class="pt-4">
+      <form action="/entreprise/{{ entreprise.id }}/nouveau-rappel" method="post">
+        {% if result and not result["is_valid"] %}
+        <div>
+          <p>Une erreur s'est produite lors du traitement de votre requête.</p>
+          {% for each in result["global_errors"] %}
+            <p style="color:red">{{ each }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <div>
+          <label for="rappel-date" class="fw-bold">Date de l'activation : </label>
+          <input type="date" id="rappel-date" name="activation">
+        </div>
+        <div>
+          <label for="rappel-note" class="form-label fw-bold">Note : </label>
+          <input type="text" id="interaction-description" name="note" class="form-control">
+        </div>
+        <input type="hidden" name="entreprise_id" value="{{ entreprise.id }}">
+        <div class="mt-2">
+          <a href="/entreprise/{{ entreprise.id }}" class="btn btn-secondary">Annuler</a>
+          <input type="submit" value="Ajouter le rappel" class="btn btn-primary">
+        </div>
+      </form>
+    </div>
+          <div class="col-1 mt-3"></div>
+
+    </div>
+{% endblock %}

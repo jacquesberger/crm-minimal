@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>CRM minimal</title>
+	<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+	<link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid px-0">
+	<nav class="navbar navbar-expand-lg">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/tableau-de-bord">CRM minimal</a>
+
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<div class="navbar-nav me-auto">
+					<a class="nav-link" href="/tableau-de-bord">Tableau de bord</a>
+					<a class="nav-link" href="/entreprises">Entreprises</a>
+					<a class="nav-link" href="/rapports">Rapports</a>
+				</div>
+				<div class="navbar-nav ms-auto">
+					<a class="nav-link" href="/parametres/compte">Paramètres</a>
+					<a class="nav-link" href="/logout">Déconnexion</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<div aria-live="polite" aria-atomic="true" class="position-relative">
+		<div id="toast-container" class="toast-container position-absolute top-0 end-0 p-3">
+			<div id="main-toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+				<div class="toast-body" id="toast-body">
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	{% block content %}{% endblock %}
+</div>
+<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="/js/main.js"> </script>
+</body>
+</html>

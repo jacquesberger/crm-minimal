@@ -1,0 +1,72 @@
+:root {
+	/* Couleurs */
+	--color-primary: #6CA6D9;   
+	--color-secondary:#91CDF2;
+	--color-accent-1: #FFFFFF;
+	--color-accent-2: #CEDEF2;
+	--color-accent-3: #020426;
+
+	/* Textes */
+	--color-text-primary: #0D0D0D;
+	--color-text-inverse: #F2EAD0;
+
+	/* États */
+	--color-border: #e5e7eb;
+	--color-hover: rgba(37, 99, 235, 0.08);
+}
+
+body{
+background-color: var(--color-accent-1);
+}
+
+
+/* navigation principale */
+nav.navbar {
+	background-color: var(--color-accent-1);
+}
+
+/* autres */
+
+p.interaction {
+	white-space: pre-wrap;
+}
+
+.below-subtitle {
+	margin-top: 2em;
+}
+
+h2.title-with-add {
+	display: inline;
+}
+
+a.beside-title {
+	margin-bottom: 1em;
+	margin-left: 0.5em;
+}
+
+.clickable-row {
+	cursor: pointer;
+}
+.toast-body-success {
+	background-color: #d4edda;
+	color: #155724;
+}
+
+.toast-body-error {
+	background-color: #f8d7da;
+	color: #721c24;
+}
+
+/*landing page*/
+
+table {
+	table-layout: auto;
+}
+
+
+/* Rapports */
+
+.titre-rapport {
+  display: flex;
+  align-items: flex-start;
+}

@@ -1,0 +1,326 @@
+#%RAML 1.0
+title: CRM Minimal - API
+version: v1
+baseUri: /
+mediaType: application/json
+
+/api:
+  /utilisateurs:
+    get:
+      description: |
+        Retourne la liste des utilisateurs.
+      responses:
+        200:
+          body:
+            application/json:
+              type: Utilisateur[]
+              examples:
+                exemple:
+                  value:
+                    - id: 1
+                      username: "alice"
+                      email: "alice@example.com"
+                      role_id: 1
+                      etat_id: 1
+                    - id: 2
+                      username: "bob"
+                      email: "bob@example.com"
+                      role_id: 2
+                      etat_id: 1
+        500:
+          body:
+            application/json:
+              type: ErrorResponse
+              examples:
+                exemple:
+                  value:
+                    Error: "Une erreur est survenue côté serveur."
+
+  /utilisateur:
+    post:
+      description: |
+        Crée un utilisateur.
+      body:
+        application/json:
+          type: CreerUtilisateurRequest
+          examples:
+            exemple:
+              value:
+                nom-utilisateur: "nouvel-utilisateur"
+                mot-de-passe: "MotDePasseUltraSecuritaire123!"
+                role: 2
+      responses:
+        200:
+          body:
+            application/json:
+              type: CreerUtilisateurResponse
+              examples:
+                exemple:
+                  value:
+                    - id: 3
+                      username: "alice"
+                      email: "alice@example.com"
+                      role_id: 2
+                      etat_id: 1
+        400:
+          body:
+            application/json:
+              type: ErrorResponse
+              examples:
+                exemple:
+                  value:
+                    Error: "Requête invalide."
+        409:
+          description: Nom d'utilisateur déjà existant.
+          body:
+            application/json:
+              type: ErrorResponse
+              examples:
+                exemple:
+                  value:
+                    Error: "Le nom d'utilisateur est déjà utilisé par un autre utilisateur."
+        500:
+          body:
+            application/json:
+              type: ErrorResponse
+              examples:
+                exemple:
+                  value:
+                    Error: "Une erreur est survenue côté serveur."
+
+  /utilisateur/{user_id}:
+    uriParameters:
+      user_id:
+        type: string
+        required: true
+    put:
+      description: |
+        Modifie le rôle et l'état d'un utilisateur.
+      body:
+        application/json:
+          type: EditUtilisateurRequest
+          examples:
+            exemple:
+              value:
+                role: 1
+                etat: 1
+      responses:
+        200:
+          body:
+            application/json:
+              type: Utilisateur
+              examples:
+                exemple:
+                  value:
+                    id: 12
+                    username: "alice"
+                    email: "alice@example.com"
+                    role_id: 1
+                    etat_id: 1
+        404:
+          body:
+            application/json:
+              type: UtilisateurNotFoundResponse
+              examples:
+                exemple:
+                  value:
+                    Error: "L'utilisateur n'a pas été trouvé."
+                    user_id: "12"
+        500:
+          body:
+            application/json:
+              type: ErrorResponse
+              examples:
+                exemple:
+                  value:
+                    Error: "Une erreur est survenue côté serveur."
+
+  /utilisateur/{user_id}/mot-de-passe:
+    uriParameters:
+      user_id:
+        type: string
+        required: true
+    put:
+      description: |
+        Définit le mot de passe d'un utilisateur.
+        Validation via admin_set_mot_de_passe_schema.
+      body:
+        application/json:
+          type: AdminSetMotDePasseRequest
+          examples:
+            exemple:
+              value:
+                nouveau-mot-de-passe: "MotDePasseUltraSecuritaire123!"
+      responses:
+        200:
+          body:
+            application/json:
+              type: SuccessResponse
+              examples:
+                exemple:
+                  value:
+                    Success: "Le mot de passe a été modifié."
+
+        400:
+          body:
+            application/json:
+              type: ErrorResponse
+              examples:
+                exemple:
+                  value:
+                    Error: "Requête invalide."
+        500:
+          body:
+            application/json:
+              type: ErrorResponse
+              examples:
+                exemple:
+                  value:
+                    Error: "Une erreur est survenue côté serveur."
+
+  /utilisateur/moi/mot-de-passe:
+    put:
+      description: |
+        Modifie le mot de passe de l'utilisateur courant.
+      body:
+        application/json:
+          type: SelfMotDePasseRequest
+          examples:
+            exemple:
+              value:
+                ancien-mot-de-passe: "AncienMotDePasse123!"
+                nouveau-mot-de-passe: "NouveauMotDePasseEncorePlusFort123!"
+                confirme-mot-de-passe: "NouveauMotDePasseEncorePlusFort123!"
+      responses:
+        200:
+          body:
+            application/json:
+              type: SuccessResponse
+              examples:
+                exemple:
+                  value:
+                    Success: "Le mot de passe a été modifié."
+        400:
+          body:
+            application/json:
+              type: ErrorResponse
+              examples:
+                exemple:
+                  value:
+                    Error: "L'ancien mot de passe est invalide."
+        409:
+          description: Nouveau mot de passe identique à l'ancien.
+          body:
+            application/json:
+              type: ErrorResponse
+              examples:
+                exemple:
+                  value:
+                    Error: "Le nouveau mot de passe doit être différent de l'ancien."
+        500:
+          body:
+            application/json:
+              type: ErrorResponse
+              examples:
+                exemple:
+                  value:
+                    Error: "Une erreur est survenue côté serveur."
+
+types:
+  ErrorResponse:
+    type: object
+    additionalProperties: false
+    properties:
+      Error:
+        type: string
+
+  SuccessResponse:
+    type: object
+    additionalProperties: false
+    properties:
+      Success:
+        type: string
+
+  Utilisateur:
+    type: object
+    additionalProperties: false
+    properties:
+      id:
+        type: string | integer
+      username:
+        type: string
+      email:
+        type: string
+      role_id:
+        type: integer
+      etat_id:
+        type: integer
+
+  UtilisateurNotFoundResponse:
+    type: object
+    additionalProperties: false
+    properties:
+      Error:
+        type: string
+      user_id:
+        type: string
+
+  CreerUtilisateurRequest:
+    type: object
+    additionalProperties: false
+    required: [nom-utilisateur, mot-de-passe, role]
+    properties:
+      nom-utilisateur:
+        type: string
+      mot-de-passe:
+        type: string
+        minLength: 15
+        maxLength: 128
+      role:
+        type: integer
+
+  CreerUtilisateurResponse:
+    type: object
+    additionalProperties: false
+    properties:
+      id:
+        type: integer
+
+  EditUtilisateurRequest:
+    type: object
+    additionalProperties: false
+    required: [role, etat]
+    properties:
+      role:
+        type: integer
+      etat:
+        type: integer
+
+  AdminSetMotDePasseRequest:
+    type: object
+    additionalProperties: false
+    required: [nouveau-mot-de-passe]
+    properties:
+      nouveau-mot-de-passe:
+        type: string
+        minLength: 15
+        maxLength: 128
+
+  SelfMotDePasseRequest:
+    type: object
+    additionalProperties: false
+    required:
+      - ancien-mot-de-passe
+      - nouveau-mot-de-passe
+      - confirme-mot-de-passe
+    properties:
+      ancien-mot-de-passe:
+        type: string
+      nouveau-mot-de-passe:
+        type: string
+        minLength: 15
+        maxLength: 128
+      confirme-mot-de-passe:
+        type: string
+        minLength: 15
+        maxLength: 128

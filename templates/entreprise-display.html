@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="row">
+	<div class="col-sm-12 mt-1 ms-2">
+		<a class="btn btn-secondary" role="button" tabindex="-1" href="/entreprises" aria-disabled="true">Retour</a>
+	</div>
+	</div>
+	<div class="row">
+		<h1 class="mb-3 mt-1 text-center">{{ entreprise.nom }}</h1>
+	</div>
+
+	<div class="row">
+		<div class="col-1"> </div>
+
+		<div class="col-10 mt-4">
+			<div class="row g-4">
+				<div class="col-12 col-lg-6">
+				<div class="d-flex align-items-center gap-2 mb-2">
+					<h2 class="m-0">Interactions</h2>
+					<a class="btn btn-primary btn-sm"
+						href="/entreprise/{{ entreprise.id }}/nouvelle-interaction">+</a>
+				</div>
+				<div class="card">
+
+				{% if not interactions %}
+				<div class="card-body">
+					<p>Aucune interaction avec cette entreprise.</p>
+					</div>
+				{% else %}
+					{% for each in interactions %}
+						<div class="card-body">
+							<p class="m-0"><small><em>
+								Interaction le <strong>{{ each.moment }}</strong>.
+							</em></small></p>
+							<p class="m-0"><small><em>
+								Créé par <strong>{{ each.cree_par or "Non associé" }}</strong>
+							</em></small></p>
+							<p class="interaction">{{ each.description }}</p>
+						</div>
+						<hr>
+					{% endfor %}
+				{% endif %}
+				</div>
+			</div>
+
+
+
+			<div class="col-12 col-lg-6">
+				<div class="d-flex align-items-center gap-2 mb-2">
+					<h2 class="m-0">Rappels</h2>
+					<a class="btn btn-primary btn-sm"
+						href="/entreprise/{{ entreprise.id }}/nouveau-rappel">+</a>
+				</div>
+
+				{% if not rappels %}
+					<p>Aucun rappel pour cette entreprise.</p>
+				{% else %}
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Activation</th>
+								<th>Note</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for each in rappels %}
+								<tr>
+									<td>{{ each.activation }}</td>
+									<td>{{ each.note }}</td>
+									<td>
+										<a href="/rappel/{{ each.id }}?entreprise={{ entreprise.id }}">
+											Retirer
+										</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				{% endif %}
+			</div>
+			</div>
+		</div>
+
+		<div class="col-1"></div>
+</div>
+
+
+
+{% endblock %}

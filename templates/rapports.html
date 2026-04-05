@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="row">
+	  <div class="col-1 mt-3"></div>
+    <div class="col-10 mt-4 ">
+      <h1 class="mb-3 mt-1 text-center">Rapports</h1>
+
+      <div class="row g-4 mt-2">
+        <div class="col-12 col-lg-6">
+          <h4 class="titre-rapport">Résumé des événements de la journée</h4>
+          <div class="card card-body">
+
+            <form action="/resume-quotidien" method="get">
+              <label for="resume-quotidien-date" class="fw-bold">Date : </label>
+              <input type="date" id="resume-quotidien-date" name="date">
+              <input type="submit" value="Envoyer" class="btn btn-primary">
+            </form>
+          </div>
+        </div>
+
+
+        <div class="col-12 col-lg-6 ">
+          <h4 class="titre-rapport">Résumé des événements depuis une date</h4>
+          <div class="card card-body">
+            <form action="/resume-depuis" method="get">
+              <label for="resume-depuis-date" class="fw-bold">Date : </label>
+              <input type="date" id="resume-depuis-date" name="date">
+              <input type="submit" value="Envoyer" class="btn btn-primary">
+            </form>
+          </div>
+    </div>
+    <div class="col-1"></div>
+  </div>
+
+{% endblock %}

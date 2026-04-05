@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+  	<div class="col-1"> </div>
+		<div class="col-10 mt-4">
+
+    <h1 class="mb-4 mt-1 text-center">Résumé quotidien pour le {{ date }}</h1>
+    {% if erreur %}
+      <p class="text-center">Il faut choisir une date pour voir le rapport.</p>
+    {% elif not elements %}
+      <p class="text-center">Aucune interaction enregistrée pour cette date.</p>
+    {% else %}
+      {% for each in elements %}
+        <h3>{{ each.entreprise_nom }}</h3>
+        <p>{{ each.description }}</p>
+        <hr>
+      {% endfor %}
+    {% endif %}
+    </div>
+		<div class="col-1"> </div>
+
+</div>
+{% endblock %}

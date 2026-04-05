@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="row">
+
+		<div class="col-1 mt-3"></div>
+		<div class="col-10 mt-4"> 
+        <h1 class="mt-3 mb-4 text-center">Ajouter une interaction pour l'entreprise {{ entreprise.nom }}</h1>
+        <div class="pt-4">
+          <form action="/entreprise/{{ entreprise.id }}/nouvelle-interaction" method="post">
+                  <div id="form-errors" style="color:red;"></div>
+
+            {% if result and not result["is_valid"] %}
+            <div>
+              <p>Une erreur s'est produite lors du traitement de votre requête.</p>
+              {% for each in result["global_errors"] %}
+                <p style="color:red">{{ each }}</p>
+              {% endfor %}
+
+            </div>
+            {% endif %}
+            <div>
+              <label for="interaction-date" class="fw-bold">Date de l'interaction : </label>
+              <input type="date" id="interaction-date" name="moment">
+            </div>
+
+            <div class="mb-3">
+              <label for="interaction-description" class="form-label fw-bold">Description : </label>
+              <textarea id="interaction-description" name="description" class="form-control" rows="10"></textarea>
+            </div>
+            <input type="hidden" name="entreprise_id" value="{{ entreprise.id }}">
+            <div>
+              <a class="btn btn-secondary" href="/entreprise/{{ entreprise.id }}">Annuler</a>
+              <input type="submit" value="Ajouter l'interaction" class="btn btn-primary">
+            </div>
+          </form>
+      </div>
+    </div>
+    <div class="col-1 mt-3"></div>
+
+  </div>
+    <script src="/js/validation_interaction.js"></script>
+{% endblock %}

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CRM minimal</title>
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">CRM minimal</a>
+
+        </div>
+    </nav>
+    <div class="row mt-2">
+        <div class="col"></div>
+
+        <div class="col-12 col-md-5 ">
+            {% if error_server %}
+                <p class="text-center text-danger">Une erreur est survenue côté serveur. Veuillez réessayer plus tard.</p>
+            {% endif %}
+            {% if error_request %}
+                <p class="text-center text-danger">Mauvais nom d'utilisateur ou mot de passe.</p>
+            {% endif %}
+            <form action="/login" method="post" class="needs-validation row g-3" novalidate>
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" class="form-control" id="username" name="username"
+                           placeholder="Entrer le nom d'utilisateur" required>
+                    <div class="invalid-feedback">
+                        Ce champ doit être rempli.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" class="form-control" id="password" name="password"
+                           placeholder="Entrer votre mot de passe"
+                           required>
+                    <div class="invalid-feedback">
+                        Ce champ doit être rempli.
+                    </div>
+                </div>
+                <div class="text-center mt-2">
+                    <button type="submit" id="submit-button-login" class="btn btn-primary ">Soumettre</button>
+
+                </div>
+            </form>
+
+        </div>
+        <div class="col"></div>
+    </div>
+
+    {% block content %}{% endblock %}
+</div>
+<script src="/js/script.js"></script>
+</body>
+</html>

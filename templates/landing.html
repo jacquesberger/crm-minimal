@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="row">
+      <div class="col-1 mt-3"></div>
+        <div class="col-10 mt-4"> 
+          <h1 class="mt-3 mb-4 text-center">Suivis à effectuer</h1>
+
+          <div class="card mt-2">
+            <table class="table {% if rappels %}table-hover{% endif %}">
+              <thead>
+                <tr>
+                  <th >Entreprise</th>
+                  <th class="text-center">Activation</th>
+                  <th>Note</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% if not rappels %}
+                <tr>
+                  <td colspan="3" class="text-center text-muted" aria-disabled="true">
+                    Rien à afficher
+                  </td>
+                </tr>
+              {% else %}
+                {% for each in rappels %}
+                  <tr class="clickable-row" data-id="{{ each.entreprise_id }}">
+                    <td>{{ each.entreprise_nom }}</td>
+                    <td>{{ each.activation }}</td>
+                    <td>{{ each.note }}</td>
+                  </tr>
+                {% endfor %}
+              {% endif %}
+            </tbody>
+
+            </table>
+          </div>
+          <div class="col-1 mt-3"></div>
+        </div>
+    </div>
+    <script src="/js/landing.js"></script>
+
+{% endblock %}
